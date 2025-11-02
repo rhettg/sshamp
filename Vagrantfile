@@ -60,7 +60,6 @@ EOF
 # If this is an SSH login, drop into amp
 if [[ -n $SSH_TTY ]]; then
   export PATH="$PATH:/home/vagrant/.local/bin"
-  export AMP_API_KEY="${AMP_API_KEY:-}"
   exec amp
 fi
 EOF
