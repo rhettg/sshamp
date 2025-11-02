@@ -63,5 +63,44 @@ if [[ -n $SSH_TTY ]]; then
   exec amp --dangerously-allow-all
 fi
 EOF
+
+    # Create AGENTS.md for Amp guidance
+    cat > /home/vagrant/AGENTS.md << 'EOF'
+# AGENTS.md for SSH AMP VM
+
+This is a virtual machine environment optimized for coding and development tasks using the Amp AI coding agent.
+
+## Environment Access
+
+You have full access to the entire VM:
+- **File System**: Complete read/write access to all directories
+- **Command Execution**: Ability to run any shell commands without prompts (--dangerously-allow-all)
+- **Network Access**: Full internet access for installations and downloads
+- **Package Management**: Install software, update packages, configure services
+
+## Intended Use
+
+This VM is designed for:
+- Installing and configuring development tools
+- Setting up programming environments
+- Testing applications and deployments
+- Automating VM customization tasks
+
+## Permissions
+
+Amp runs with permissive settings allowing autonomous operation. All tool uses are automatically approved.
+
+## Available Tools
+
+- Package managers: apt, pip, npm, etc.
+- System tools: systemctl, user management
+- Development tools: git, compilers, editors
+- Network tools: curl, wget, ssh
+
+Use your full capabilities to help customize and manage this VM environment.
+EOF
+
+    # Set ownership
+    chown vagrant:vagrant /home/vagrant/AGENTS.md
   SHELL
 end
