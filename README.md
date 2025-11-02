@@ -4,27 +4,28 @@ This project creates a virtual machine that launches and immediately drops SSH l
 
 ## Overview
 
-- **amp**: A coding agent CLI installed via `curl -fsSL https://ampcode.com/install.sh | bash`
+This project creates a customized virtual machine optimized for coding and development tasks using Amp, a powerful AI coding agent.
 
-- **beads**: Project management tool using issue tracking, installed via `curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash`
+### Key Tools
 
-- **VM Management**: Using Vagrant for local testing, Packer for building images (inspired by HashiCorp products)
+- **Amp**: Frontier coding agent CLI for autonomous code editing, tool use, and complex task execution. Installed via `curl -fsSL https://ampcode.com/install.sh | bash`
 
-- **Server**: maeve, with existing Vagrant setup for testing
+- **Beads**: Project management and issue tracking tool. Installed via `curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash`
+
+- **VM Management**: Using Vagrant for local testing and Packer for building distributable images (inspired by HashiCorp tooling)
+
+- **Server**: Primary testing on maeve server with existing Vagrant infrastructure
 
 ## Goals
 
-Upon SSH login to the VM, the user is dropped directly into the 'amp' environment for VM customization.
+Create a virtual machine environment where SSH login immediately provides access to the Amp coding agent for seamless VM customization and management. The VM includes all necessary tools preinstalled with minimal configuration required.
 
 ## Components
 
-- Packer image with preinstalled amp and beads
-
-- Vagrant configuration for launching the VM
-
-- SSH setup to launch amp on login
-
-- Authentication via token (to be investigated)
+- **Packer Image**: Base VM image with preinstalled Amp CLI, Beads, and permissive Amp configuration
+- **Vagrant Configuration**: Local development setup for testing VM launches
+- **SSH Configuration**: Automatic launch of Amp CLI upon SSH login
+- **Authentication**: Token-based via API key for non-interactive environments
 
 ## Project Management
 
@@ -35,6 +36,30 @@ Run `bd list` to see current issues.
 Run `bd ready` to see work ready to do.
 
 Run `bd show <issue-id>` to view details.
+
+## Usage
+
+Once the VM is launched and SSH is configured, logging into the VM will automatically drop you into the Amp CLI environment for VM customization. Amp is pre-installed with a permissive configuration to minimize user prompts and allow autonomous operations.
+
+### Authentication
+
+Amp requires authentication on first use. For automated VM environments:
+
+- Obtain your API key from [ampcode.com/settings](https://ampcode.com/settings)
+- Set it in the VM environment: `export AMP_API_KEY=your-api-key-here`
+- This allows Amp to run without interactive login prompts
+
+Alternatively, run `amp login` in the VM to authenticate via web browser.
+
+### Customization
+
+Use Amp to customize the VM:
+
+- Install software: `amp -x "install nodejs"`
+- Configure services: `amp -x "set up nginx"`
+- Edit files: Open files in your IDE or use Amp's editing tools
+
+Amp's permissive config enables file access, command execution, and auto-approval of minor changes.
 
 ## Getting Started
 
