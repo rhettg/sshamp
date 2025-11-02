@@ -21,14 +21,14 @@ Vagrant.configure("2") do |config|
     # Install Amp CLI
     curl -fsSL https://ampcode.com/install.sh | bash
 
-    # Clone the project repo
-    git clone https://github.com/rhettg/sshamp.git /home/vagrant/project
-
     # Install Go for beads building
     apt-get install -y golang-go
 
-    # Install Beads
-    curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
+    # Install Beads as vagrant user
+    su - vagrant -c "curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash"
+
+    # Clone the project repo as vagrant user
+    su - vagrant -c "git clone https://github.com/rhettg/sshamp.git /home/vagrant/project"
 
     # Create permissive amp config
     mkdir -p /home/vagrant/.amp
