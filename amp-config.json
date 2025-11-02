@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "file_access": true,
+    "network_access": true,
+    "command_execution": true,
+    "auto_approve_minor_changes": true
+  },
+  "behavior": {
+    "prompt_for_major_changes": false,
+    "allow_file_modifications": true,
+    "allow_code_execution": true
+  }
+}
