@@ -40,7 +40,7 @@ Run `bd show <issue-id>` to view details.
 
 1. Clone the repository
 
-2. Run `bd init` to set up beads locally
+2. Run `bd init` to set up beads locally (say yes to git hooks for auto-sync)
 
 3. Run `bd ready` to see next steps
 
@@ -49,3 +49,16 @@ Run `bd show <issue-id>` to view details.
 5. SSH into the VM: `vagrant ssh`
 
 6. Start customizing with amp
+
+## Beads Git Hooks
+
+Beads syncs the SQLite database to JSONL files in `.beads/`. For zero-lag sync across machines:
+
+- Install git hooks: Run `bd init` and approve hooks, or manually:
+  ```
+  ln -s ../../.beads/git-hooks/pre-commit .git/hooks/pre-commit
+  ln -s ../../.beads/git-hooks/post-merge .git/hooks/post-merge
+  chmod +x .git/hooks/pre-commit .git/hooks/post-merge
+  ```
+
+This ensures issues sync before commits and after merges/pulls.
