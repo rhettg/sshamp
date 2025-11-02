@@ -53,5 +53,15 @@ EOF
     su - vagrant -c "cd /home/vagrant && ln -sf ../../.beads/git-hooks/pre-commit .git/hooks/pre-commit"
     su - vagrant -c "cd /home/vagrant && ln -sf ../../.beads/git-hooks/post-merge .git/hooks/post-merge"
     su - vagrant -c "cd /home/vagrant && chmod +x .git/hooks/pre-commit .git/hooks/post-merge"
+
+    # Configure SSH login to drop into amp
+    cat >> /home/vagrant/.bashrc << 'EOF'
+
+# If this is an SSH login, drop into amp
+if [[ -n $SSH_TTY ]]; then
+  export AMP_API_KEY="${AMP_API_KEY:-}"
+  exec amp
+fi
+EOF
   SHELL
 end
