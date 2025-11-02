@@ -21,6 +21,12 @@ Vagrant.configure("2") do |config|
     # Install Amp CLI
     curl -fsSL https://ampcode.com/install.sh | bash
 
+    # Clone the project repo
+    git clone https://github.com/rhettg/sshamp.git /home/vagrant/project
+
+    # Install Go for beads building
+    apt-get install -y golang-go
+
     # Install Beads
     curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
 
@@ -47,12 +53,12 @@ EOF
     chown -R vagrant:vagrant /home/vagrant/.beads 2>/dev/null || true
 
     # Initialize beads (run as vagrant user)
-    su - vagrant -c "cd /vagrant && ~/go/bin/bd init --yes"
+    su - vagrant -c "cd /home/vagrant/project && ~/go/bin/bd init --yes"
 
     # Set up git hooks for beads sync
-    su - vagrant -c "cd /vagrant && ln -sf .beads/git-hooks/pre-commit .git/hooks/pre-commit"
-    su - vagrant -c "cd /vagrant && ln -sf .beads/git-hooks/post-merge .git/hooks/post-merge"
-    su - vagrant -c "cd /vagrant && chmod +x .git/hooks/pre-commit .git/hooks/post-merge"
+    su - vagrant -c "cd /home/vagrant/project && ln -sf .beads/git-hooks/pre-commit .git/hooks/pre-commit"
+    su - vagrant -c "cd /home/vagrant/project && ln -sf .beads/git-hooks/post-merge .git/hooks/post-merge"
+    su - vagrant -c "cd /home/vagrant/project && chmod +x .git/hooks/pre-commit .git/hooks/post-merge"
 
     # Configure SSH login to drop into amp
     cat >> /home/vagrant/.bashrc << 'EOF'
@@ -65,7 +71,7 @@ fi
 EOF
 
     # Create AGENTS.md for Amp guidance
-    cat > /vagrant/AGENTS.md << 'EOF'
+    cat > /home/vagrant/AGENTS.md << 'EOF'
 # AGENTS.md for SSH AMP VM
 
 This is a virtual machine environment optimized for coding and development tasks using the Amp AI coding agent.
@@ -99,5 +105,8 @@ Amp runs with permissive settings allowing autonomous operation. All tool uses a
 
 Use your full capabilities to help customize and manage this VM environment.
 EOF
+
+    # Set ownership
+    chown vagrant:vagrant /home/vagrant/AGENTS.md
   SHELL
 end
