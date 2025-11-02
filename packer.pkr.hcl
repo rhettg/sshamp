@@ -8,20 +8,18 @@ packer {
 }
 
 source "qemu" "ubuntu" {
-  guest_os_type = "Ubuntu_64"
-  iso_url       = "https://releases.ubuntu.com/22.04/ubuntu-22.04.5-live-server-amd64.iso"
-  iso_checksum  = "sha256:9bc6028870aef3f74f4e16b900008179e78b130e6b0a6016a38e1025832f3022b6"
+  iso_url      = "https://releases.ubuntu.com/22.04/ubuntu-22.04.5-live-server-amd64.iso"
+  iso_checksum = "sha256:9bc6028870aef3f74f4e16b900008179e78b130e6b0b9a140635434a46aa98b0"
+
+  disk_size    = "20G"
+  format       = "qcow2"
+  accelerator  = "kvm"
 
   ssh_username = "vagrant"
   ssh_password = "vagrant"
   ssh_timeout  = "20m"
 
   shutdown_command = "echo 'vagrant' | sudo -S shutdown -P now"
-
-  vboxmanage = [
-    ["modifyvm", "{{.Name}}", "--memory", "2048"],
-    ["modifyvm", "{{.Name}}", "--cpus", "2"],
-  ]
 
   boot_command = [
     "<enter><enter><f6><esc><wait>",
@@ -44,7 +42,7 @@ source "qemu" "ubuntu" {
 }
 
 build {
-  sources = ["source.virtualbox-iso.ubuntu"]
+  sources = ["source.qemu.ubuntu"]
 
   provisioner "shell" {
     inline = [
