@@ -2,11 +2,11 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/jammy64"  # Ubuntu 22.04 LTS
+  config.vm.box = "generic/ubuntu2204"  # Ubuntu 22.04 LTS
 
-  config.vm.provider "virtualbox" do |vb|
-    vb.memory = "2048"
-    vb.cpus = 2
+  config.vm.provider "libvirt" do |libvirt|
+    libvirt.memory = 2048
+    libvirt.cpus = 2
   end
 
   # Provisioning script to install amp, beads, and configure
@@ -59,6 +59,7 @@ EOF
 
 # If this is an SSH login, drop into amp
 if [[ -n $SSH_TTY ]]; then
+  export PATH="$PATH:/home/vagrant/.local/bin"
   export AMP_API_KEY="${AMP_API_KEY:-}"
   exec amp
 fi
